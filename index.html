@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ToolsDaddy — Coming Soon</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Creto+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset and body */
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, sans-serif;
+      background: #000;
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Container */
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px;
+      box-sizing: border-box;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    /* Logo/Header */
+    .logo {
+      font-family: "Patrick Hand", Inter;
+      font-weight: 700;
+      font-size: 42px;
+      margin: 0;
+      text-align: center;
+    }
+    .logo-tools {
+      color: #3DB5FF;
+      font-size: 48px;
+    }
+    .logo-daddy {
+      color: #7B3BFF;
+      font-size: 36px;
+      margin-left: 6px;
+    }
+    .brand p {
+      margin: -2px 0 0 0;
+      font-size: 16px;
+      color: #aaa;
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 80px 32px;
+      text-align: center;
+    }
+    .hero .eyebrow {
+      color: #ccc;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .hero h2 {
+      font-family: "Patrick Hand";
+      font-size: 48px;
+      margin: 6px 0;
+      line-height: 1.1;
+    }
+    .hero h2 .accent {
+      color: #3DB5FF;
+    }
+    .hero p {
+      color: #aaa;
+      max-width: 840px;
+      margin: 18px auto 24px auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* Progress */
+    .progress-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 6px 20px 6px;
+      width: 100%;
+      max-width: 500px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 14px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 65%;
+      background: linear-gradient(90deg,#7B3BFF, #3DB5FF);
+      transition: width 500ms cubic-bezier(.2,.9,.3,1);
+    }
+    .progress-percent {
+      font-weight: 700;
+      color: #3DB5FF;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    /* Subscribe Form */
+    .subscribe {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-direction: column;
+    }
+    .input-row {
+    
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      max-width: 700px;
+    }
+    .input {
+      flex: 1;
+      background: #111;
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid #444;
+      font-size: 16px;
+      color: #fff;
+      outline: none;
+    }
+    .input::placeholder {
+      color: #777;
+    }
+    .btn {
+      background: linear-gradient(90deg,#7B3BFF, #3DB5FF);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(123,59,255,0.18);
+      transition: transform 140ms ease;
+      min-width: 150px;
+    }
+    .btn:active {
+      transform: translateY(2px);
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .feature-card {
+      padding: 20px 16px;
+      text-align: center;
+      border-radius: 16px;
+      background: #111;
+      border: 1.5px solid #444;
+      transition: 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 1.4rem;
+    }
+    .feature-icon.purple { background: linear-gradient(90deg, #0ea5e9, #8b5cf6); color: #fff; }
+    .feature-icon.green { background: linear-gradient(90deg, #34d399, #10b981); color: #fff; }
+    .feature-icon.light-green { background: linear-gradient(90deg, #8b5cf6, #0ea5e9); color: #fff; }
+    .feature-card h3 { font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: 12px; }
+    .feature-card p { color:#aaa; line-height:1.6; font-size:0.95rem; }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) { .features-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+    @media (max-width: 700px) {
+      .features-grid { grid-template-columns: 1fr; gap: 16px; }
+      .input-row { flex-direction: column; max-width: 100%; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1 class="logo">
+          <span class="logo-tools">Tools</span><span class="logo-daddy">Daddy</span>
+        </h1>
+        <p>Your Ultimate Subscription-Based Tool Platform</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h2>Something <span class="accent">Amazing</span> <br/>is Coming</h2>
+        <div class="eyebrow">
+          A smarter way to work is almost here. Get early access and experience the future of subscription tools.
+          <p>Join the waitlist and be among the first to experience it.</p>
+        </div>
+
+        <div class="progress-wrap">
+          <div style="font-size:14px;color:#aaa">Development Progress</div>
+          <div class="progress-percent" id="progressLabel">65%</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:65%"></div>
+        </div>
+
+        <div class="subscribe">
+          <div class="input-row">
+            <div id="msg" style="margin-top: 10px; font-size: 15px; color: #3DB5FF;"></div>
+
+            <input id="email" type="email" placeholder="Enter your email" class="input">
+            <button class="btn" id="notifyBtn">Notify Me</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon purple">✓</div>
+          <h3>Local Pricing in NPR</h3>
+          <p>Affordable subscriptions tailored specifically for Nepal. No currency confusion or extra charges.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon green">⚡</div>
+          <h3>Instant Activation</h3>
+          <p>Lightning-fast setup via WhatsApp. Order now, use instantly. No waiting around.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon purple">🛡️</div>
+          <h3>Trusted by 690+</h3>
+          <p>Join hundreds of students, creators, and professionals who trust us daily.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon light-green">💬</div>
+          <h3>Simple Process</h3>
+          <p>No complicated forms, no payment gateways. Just message, pay, and activate.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span style="margin-right:8px; font-size:18px;">⚡</span> Actively in Development.
+    </footer>
+  </div>
+</body>
+<script>
+
+document.getElementById('notifyBtn').addEventListener('click', function() {
+
+  const btn = document.getElementById('notifyBtn');
+  const emailInput = document.getElementById('email');
+  const msgBox = document.getElementById('msg');
+
+  let email = emailInput.value.trim();
+  msgBox.innerText = '';
+  msgBox.style.color = "#3DB5FF";
+
+  if(email === "") {
+    msgBox.style.color = "red";
+    msgBox.innerText = "Please enter a valid email!";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerText = "Sending...";
+
+  fetch('subscribe.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'email=' + encodeURIComponent(email)
+  })
+  .then(response => response.text())
+  .then(data => {
+    if (data.toLowerCase().includes("thank")) {
+      msgBox.style.color = "#34d399";
+      msgBox.innerText = "You'll be notified when it's ready!";
+      emailInput.value = "";
+    } else {
+      msgBox.style.color = "red";
+      msgBox.innerText = data;
+    }
+  })
+  .catch(() => {
+    msgBox.style.color = "red";
+    msgBox.innerText = "Something went wrong, try again.";
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerText = "Notify Me";
+    setTimeout(() => msgBox.innerText = "", 6000);
+  });
+
+});
+
+
+
+</script>
+</html>
