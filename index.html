@@ -253,10 +253,10 @@
 
         <div class="subscribe">
   <div id="msg" style="min-height:20px;margin-bottom:8px;font-size:15px;color:#3DB5FF;"></div>
-  <div class="input-row">
-    <input id="email" type="email" placeholder="Enter your email" class="input">
-    <button class="btn" id="notifyBtn">Notify Me</button>
-  </div>
+ <div class="input-row">
+  <input id="email" type="email" placeholder="Enter your email" class="input">
+  <button class="btn" id="notifyBtn">Notify Me</button>
+</div>
 </div>
 
         
@@ -291,52 +291,51 @@
     </footer>
   </div>
 </body>
+
 <script>
-document.getElementById('notifyBtn').addEventListener('click', function() {
+const btn = document.getElementById('notifyBtn');
+const emailInput = document.getElementById('email');
+const msgBox = document.getElementById('msg');
 
-  const btn = document.getElementById('notifyBtn');
-  const emailInput = document.getElementById('email');
-  const msgBox = document.getElementById('msg');
-
+function sendNotification() {
   let email = emailInput.value.trim();
   msgBox.innerText = '';
   msgBox.style.color = "#3DB5FF";
 
-  if(email === "") {
+  if (email === "" || !/\S+@\S+\.\S+/.test(email)) {
     msgBox.style.color = "red";
     msgBox.innerText = "Please enter a valid email!";
     return;
   }
 
-  btn.disabled = true;
-  btn.innerText = "Sending...";
+  // Get stored emails
+  let emails = JSON.parse(localStorage.getItem('emails') || '[]');
 
-  fetch('subscribe.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'email=' + encodeURIComponent(email)
-  })
-  .then(response => response.text())
-  .then(data => {
-    if (data.toLowerCase().includes("thank")) {
-      msgBox.style.color = "#34d399";
-      msgBox.innerText = "You'll be notified when it's ready! ✅";
-      emailInput.value = "";
-    } else {
-      msgBox.style.color = "red";
-      msgBox.innerText = data;
-    }
-  })
-  .catch(() => {
-    msgBox.style.color = "red";
-    msgBox.innerText = "Something went wrong, try again.";
-  })
-  .finally(() => {
-    btn.disabled = false;
-    btn.innerText = "Notify Me";
-    setTimeout(() => msgBox.innerText = "", 6000);
-  });
+  // Check for duplicate
+  if (emails.includes(email)) {
+    msgBox.style.color = "orange";
+    msgBox.innerText = "You're already on the list! ✅";
+    return;
+  }
 
+  // Add email to storage
+  emails.push(email);
+  localStorage.setItem('emails', JSON.stringify(emails));
+
+  msgBox.style.color = "#34d399";
+  msgBox.innerText = "Thank you! You'll be notified! ✅";
+  emailInput.value = "";
+}
+
+// Click event
+btn.addEventListener('click', sendNotification);
+
+// Enter key triggers notification
+emailInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    sendNotification();
+  }
 });
 </script>
 
