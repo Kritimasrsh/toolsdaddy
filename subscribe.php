@@ -1,28 +1,40 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+header('Content-Type: text/plain');
 
-    // Validate email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email address!";
-        exit;
-    }
+$servername = "localhost";
+$username = "root";  // your DB username
+$password = "";      // your DB password
+$dbname = "tools_db";
 
-    // File to store emails
-    $file = 'emails.txt';
-    if (!file_exists($file)) file_put_contents($file, '');
-
-    // Prevent duplicates
-    $emails = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    if (in_array($email, $emails)) {
-        echo "You're already on the list!";
-        exit;
-    }
-
-    // Store email
-    file_put_contents($file, $email . PHP_EOL, FILE_APPEND | LOCK_EX);
-    echo "Thank you! You'll be notified.";
-} else {
-    echo "Invalid request!";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+if (isset($_POST['email'])) {
+    $email = trim($_POST['email']);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email!";
+        exit;
+    }
+
+    // Check for duplicates
+    $stmt = $conn->prepare("SELECT id FROM subscribers WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        echo "You're already on the list! ✅";
+    } else {
+        $stmt = $conn->prepare("INSERT INTO subscribers (email) VALUES (?)");
+        $stmt->bind_param("s", $email);
+        if ($stmt->execute()) {
+            echo "Thank you! You'll be notified! ✅";
+        } else {
+            echo "Database error!";
+        }
+    }
+}
+$conn->close();
 ?>
