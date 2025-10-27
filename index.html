@@ -252,13 +252,14 @@
         </div>
 
         <div class="subscribe">
-          <div class="input-row">
-            <div id="msg" style="margin-top: 10px; font-size: 15px; color: #3DB5FF;"></div>
+  <div id="msg" style="min-height:20px;margin-bottom:8px;font-size:15px;color:#3DB5FF;"></div>
+  <div class="input-row">
+    <input id="email" type="email" placeholder="Enter your email" class="input">
+    <button class="btn" id="notifyBtn">Notify Me</button>
+  </div>
+</div>
 
-            <input id="email" type="email" placeholder="Enter your email" class="input">
-            <button class="btn" id="notifyBtn">Notify Me</button>
-          </div>
-        </div>
+        
       </section>
 
       <div class="features-grid">
@@ -291,7 +292,6 @@
   </div>
 </body>
 <script>
-
 document.getElementById('notifyBtn').addEventListener('click', function() {
 
   const btn = document.getElementById('notifyBtn');
@@ -320,7 +320,7 @@ document.getElementById('notifyBtn').addEventListener('click', function() {
   .then(data => {
     if (data.toLowerCase().includes("thank")) {
       msgBox.style.color = "#34d399";
-      msgBox.innerText = "You'll be notified when it's ready!";
+      msgBox.innerText = "You'll be notified when it's ready! ✅";
       emailInput.value = "";
     } else {
       msgBox.style.color = "red";
@@ -338,6 +338,7 @@ document.getElementById('notifyBtn').addEventListener('click', function() {
   });
 
 });
+</script>
 
 
 
